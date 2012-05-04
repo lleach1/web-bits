@@ -1,0 +1,197 @@
+#!/usr/bin/python
+
+import MySQLdb, cgi
+import unicodedata
+
+ 
+encoding = 'utf-8'
+  
+header = '''
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=%s">
+	<style type="text/css">
+            body { font-family: "Aboriginal Serif", Times, serif;}
+            .red { color: red;}
+        </style>
+    </head>
+    <body>''' % encoding
+footer = '''
+    </body>
+</html>'''
+
+"""Replaces the human readable entity references with
+their unicode equivalents.  If the optional second and
+third arguments are supplied it will substitute all
+occurances of queryWord using the highlightText field.
+
+Example:
+
+result = navajoReplace("This spam is rotten!", "spam", 
+			'<span class="red">%s</span>')
+result will then be:
+'This <span class="red">spam</span> is rotten!'
+"""
+def navajoReplace(dbWord,queryWord=None, highlightText=None):
+
+    for (char, val) in navajo.iteritems():
+        dbWord = str(dbWord).replace(char,val)
+    
+    if queryWord != None and highlightText != None:
+        newWord = highlightText % queryWord
+        modWord = dbWord.replace(queryWord,newWord)
+
+    return modWord
+
+def convertQueryString(word):
+    for (char, val) in navajoReverse.iteritems():
+        word = word.replace(char, val)
+    return word
+
+"""
+Map Database Entities to their Display Characters.
+"""
+navajo =  {
+	'&A-acute;':		'&#193;', 
+	'&A-hook;':		'&#260;',
+	'&A-acute-hook;':	'&#62128;',	 
+	'&a-acute;':		'&#225;', 
+	'&a-hook;':		'&#261;', 
+	'&a-acute-hook;':	'&#62129;',
+	'&E-acute;':		'&Eacute;', 
+	'&E-hook;':		'&#280;',
+	'&E-acute-hook;':	'&#62288;',
+	'&e-acute;':		'&#233;',
+	'&e-hook;':		'&#281;', 
+	'&e-acute-hook;':	'&#62289;',
+	'&I-acute;':		'&#205;', 
+	'&I-hook;':		'&#302;', 
+	'&I-acute-hook;':	'&#62448;',
+	'&i-acute;':		'&#237;',
+	'&i-hook;':		'&#303;', 
+	'&i-acute-hook;':	'&#62449;',
+	'&O-acute;':		'&#211;',
+	'&O-hook;':		'&#490;',
+	'&O-acute-hook;':	'&#62608;',
+	'&o-acute;':		'&#243;', 
+	'&o-hook;':		'&#491;', 
+	'&o-acute-hook;':	'&#62609',
+	'&L-bar;':		'&#321;',
+	'&l-bar;':		'&#322;',
+	'&N-acute;':		'&#323;', 
+	'&n-acute;':		'&#324;',
+        '&nullset;':            '&#216;'
+	}
+
+"""
+Map Display Characters to their Database Entities.
+"""
+navajoReverse ={
+	'\xc1': 	'&A-acute;',
+        '&#193;':       '&A-acute;',
+	'&#260;': 	'&A-hook;',
+
+	'&#62128;': 	'&A-acute-hook;', 
+
+        '\xe1': 	'&a-acute;',
+        '&#225;':       '&a-acute;',
+	'&#261;': 	'&a-hook;',
+
+	'&#62129;': 	'&a-acute-hook;',
+
+	'\xc9': 	'&E-acute;',
+        '&#201;':       '&E-acute;',
+	'&#280;': 	'&E-hook;',
+
+	'&#62288;': 	'&E-acute-hook;',
+
+	'\xe9': 	'&e-acute;',
+        '&#233;':       '&e-acute;',
+	'&#281;': 	'&e-hook;',
+
+	'&#62289;': 	'&e-acute-hook;',
+
+	'\xd3': 	'&O-acute;',
+        '&#211;':       '&O-acute;',
+	'&#490;': 	'&O-hook;',
+
+	'&#62608;': 	'&O-acute-hook;',
+
+	'\xf3': 	'&o-acute;',
+        '&#243;':        '&o-acute;',
+	'&#491;': 	'&o-hook;',
+
+	'&#62609;': 	'&o-acute-hook;',
+
+	'\xcd': 	'&I-acute;',
+        '&#205;':       '&I-acute;',
+	'&#302;': 	'&I-hook;',
+
+	'&#62448;': 	'&I-acute-hook;',
+
+	'\xed': 	'&i-acute;',
+        '&#237;':       '&i-acute;',
+	'&#303;': 	'&i-hook;',
+
+	'&#62449;': 	'&i-acute-hook;',
+
+	'&#323;': 	'&N-acute;', 
+
+	'&#324;': 	'&n-acute;',
+
+	'&#321;': 	'&L-bar;',
+
+        '&#322;': 	'&l-bar;',	
+
+        '&#216;':       '&nullset;'
+        }
+
+def doDBQuery(word, whole):
+    newWord = convertQueryString(word)
+    #print newWord
+    if whole == 'whole':
+        newWord = '"% ' + newWord + ' %"'
+    else:
+        newWord = '"%' + newWord + '%"'
+    query = """
+    SELECT word, def, IFNULL(defExtra,'')
+    FROM primarylines 
+    WHERE word LIKE %s
+    OR def LIKE %s
+    OR defextra LIKE %s
+    """ % (newWord,newWord,newWord)
+    #print query
+    connection = MySQLdb.connect('HOSTNAME','DBUSER','USERPASS','DBNAME')
+    cursor = connection.cursor()
+    cursor.execute(query);
+    wordlist = cursor.fetchall()
+    cursor.close()
+
+    highlight = '<span class="red">%s</span>'
+
+#    print "Your Query: " + theWord
+#    print "( Converted: " + newWord + " )"
+    print '<table border="1">'
+    print "<th>Word</th><th>Definition</th><th>Definition Extra</th>"
+    for (word,defn,defExtra) in wordlist:
+        #defn = defn.tostring()
+        #defExtra = defExtra.tostring()
+        print "<tr><td>%s</td><td>%s</td><td>%s</td></tr>" % (navajoReplace(word,theWord,highlight).encode(encoding),navajoReplace(defn,theWord,highlight).encode(encoding),navajoReplace(defExtra,theWord,highlight).encode(encoding))
+    print "</table>"
+
+print "Content-Type: text/html\n\n"
+print header
+
+form = cgi.FieldStorage()
+
+theWord = form.getvalue('queryWord')
+#print theWord
+whole = form.getvalue('whole')
+
+if theWord == None:
+    print "<p>You must specify a search term.</p>"
+else:
+    doDBQuery(theWord,whole)
+print footer
+
+

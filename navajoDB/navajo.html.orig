@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=UTF-8" />
+  <style type="text/css">
+            body {font-family: "Aboriginal Serif", Times, serif;}
+            input { font-size: 1.2em;}
+	    td p     { line-height: 1.1em; text-align: center;}
+	    .navText {font-family: "Aboriginal Serif", Times, serif;}
+  </style>
+
+  <title>Navajo Dictionary Query</title>
+  <script language="JavaScript" type="text/javascript">
+    <!--
+    function AppendCharacter(chrToAppend)
+    {
+    document.QueryText.queryWord.value += chrToAppend;
+    document.QueryText.queryWord.focus();
+    }
+    //-->
+  </script>
+</head>
+
+<body onload="document.QueryText.queryWord.focus()">
+  <div class="instructions">
+    <p>Instructions:</p>
+   
+    <p>You will need to install the font Aboriginal Serif for the special character
+    required by the Navajo language to display.  You can download
+    a copy <a href="http://acad.swarthmore.edu/navajo/absechr7.ttf.zip">here</a>. Decompress the file, then; On a Windows machine you can drag the file absechr7.ttf to C:\WINDOWS\Fonts or On a Macintosh, copy the file to the /Library/Fonts folder.</p>
+    <p>Supported Browsers:</p>
+    <ul>
+        <li>Windows: Firefox 0.8, Mozilla 1.6 or Internet Explorer 6</li>
+        <li>Macintosh: Firefox 0.8 or Mozilla 1.6</li>
+    </ul>
+  <p>Use the buttons below to enter the special characters and your keyboard to
+  enter any other characters.</p>
+  </div>
+  <form name="QueryText" action="/cgi-bin/navajo" id="QueryText" method="post">
+    <table summary="Navajo Special Characters" border=1>
+      <tr>
+        <td><input class="navText" type="button" name="Aacute" value="&Aacute;"
+        onclick="AppendCharacter('&Aacute;')" /></td>
+
+        <td><input class="navText" type="button" name="aacute" value="&aacute;"
+        onclick="AppendCharacter('&aacute;')" /></td>
+
+        <td><input class="navText" type="button" name="Ahook" value="&#260;"
+        onclick="AppendCharacter('&#260;')" /></td>
+
+        <td><input class="navText" type="button" name="ahook" value="&#261;"
+        onclick="AppendCharacter('&#261;')" /></td>
+
+        <td><input class="navText" type="button" name="Aacutehook" value=&#62128;
+        onclick="AppendCharacter('&#62128;')" /></td>
+
+        <td><input class="navText" type="button" name="aacutehook" value="&#62129;"
+        onclick="AppendCharacter('&#62129;')" /></td>
+
+        <td><input class="navText" type="button" name="Eacute" value="&Eacute;"
+        onclick="AppendCharacter('&Eacute;')" /></td>
+
+        <td><input class="navText" type="button" name="eacute" value="&eacute;"
+        onclick="AppendCharacter('&eacute;')" /></td>
+
+        <td><input class="navText" type="button" name="Ehook" value="&#280;"
+        onclick="AppendCharacter('&#280;')" /></td>
+
+        <td><input class="navText" type="button" name="ehook" value="&#281;"
+        onclick="AppendCharacter('&#281;')" /></td>
+
+        <td><input class="navText" type="button" name="Eacutehook" value="&#62288;"
+        onclick="AppendCharacter('&#62288;')" /></td>
+
+        <td><input class="navText" type="button" name="eacutehook" value="&#62289;"
+        onclick="AppendCharacter('&#62289;')" /></td>
+
+        <td><input class="navText" type="button" name="Iacute" value="&Iacute;"
+        onclick="AppendCharacter('&Iacute;')" /></td>
+
+        <td><input class="navText" type="button" name="iacute" value="&iacute;"
+        onclick="AppendCharacter('&iacute;')" /></td>
+      </tr>
+      <tr>
+        <td><input class="navText" type="button" name="Ihook" value="&#302;"
+        onclick="AppendCharacter('&#302;')" /></td>
+
+        <td><input class="navText" type="button" name="ihook" value="&#303;"
+        onclick="AppendCharacter('&#303;')" /></td>
+
+        <td><input class="navText" type="button" name="Iacutehook" value="&#62448;"
+        onclick="AppendCharacter('&#62448;')" /></td>
+
+        <td><input class="navText" type="button" name="iacutehook" value="&#62449;"
+        onclick="AppendCharacter('&#62449;')" /></td>
+
+        <td><input class="navText" type="button" name="Oacute" value="&Oacute;"
+        onclick="AppendCharacter('&Oacute;')" /></td>
+
+        <td><input class="navText" type="button" name="oacute" value="&#243;"
+        onclick="AppendCharacter('&#243;')" /></td>
+
+        <td><input class="navText" type="button" name="Ohook" value="&#490;"
+        onclick="AppendCharacter('&#490;')" /></td>
+
+        <td><input class="navText" type="button" name="ohook" value="&#491;"
+        onclick="AppendCharacter('&#491;')" /></td>
+
+        <td><input class="navText" type="button" name="Oacutehook" value="&#62608;"
+        onclick="AppendCharacter('&#62608;')" /></td>
+
+        <td><input class="navText" type="button" name="oacutehook" value="&#62609;"
+        onclick="AppendCharacter('&#62609;')" /></td>
+
+        <td><input class="navText" type="button" name="Nacute" value="&#323;"
+        onclick="AppendCharacter('&#323;')" /></td>
+
+        <td><input class="navText" type="button" name="nacute" value="&#324;"
+        onclick="AppendCharacter('&#324;')" /></td>
+
+        <td><input class="navText" type="button" name="Lbar" value="&#321;"
+        onclick="AppendCharacter('&#321;')" /></td>
+
+        <td><input class="navText" type="button" name="lbar" value="&#322;"
+        onclick="AppendCharacter('&#322;')" /></td>
+      </tr>
+    </table>
+<!--    <p>Search for <input type="radio" name="whole" value="whole" /> Whole or -->
+<!--       <input type="radio" name="whole" value="partial" checked="checked" />Partial word matches.</p> -->
+    <p><input class="navText" type="text" name="queryWord" value="" size=
+    "120" /></p>
+    <input type="hidden" name="whole" value="partial" />
+    <p><input type="submit" name="Run" value="Submit" />
+    <input type="reset" value="Clear" /></p>
+  </form>
+</body>
+</html>
